@@ -10,20 +10,34 @@ const createBOTGPT = async ({provider, database}) => {
     return new ChatGPTClass(database, provider);
 };
 
-//  const flujoHola = addKeyword(['hola' , 'buenas']).addAnswer('Hola, ¿en qué puedo ayudarte?').addAnswer('¿Cómo es tu email', {capture:true},  (ctx) => {
-//     console.log('Aqui viene el email: ', ctx.body)
-//  })
-// .addAnswer('Gracias por la información')
+const flujoHola = addKeyword(['hola' , 'buenas'])
+    .addAnswer(async (ctx) => {
+        // Hacer una solicitud a ChatGPT
+        const response = await this.openai.sendMessage(ctx.body);
+
+        // Utilizar la respuesta de ChatGPT como respuesta del bot
+        return response.text;
+    })
+    .addAnswer(async (ctx) => {
+        console.log('Aqui viene el email: ', ctx.body)
+
+        // Hacer una solicitud a ChatGPT
+        const response = await this.openai.sendMessage(ctx.body);
+
+        // Utilizar la respuesta de ChatGPT como respuesta del bot
+        return response.text;
+    })
+    .addAnswer('Gracias por la información')
 
 
 
 const main = async () => {
     const adapterDB = new MockAdapter() 
-    // const adapterFlow = createFlow([flujoHola])
+    const adapterFlow = createFlow([flujoHola])
     const adapterProvider = createProvider(BaileysProvider);
 
     createBOTGPT({
-        // flow: adapterFlow,
+        flow: adapterFlow,
         provider: adapterProvider,
         database: adapterDB,
     })

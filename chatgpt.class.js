@@ -18,8 +18,8 @@ class ChatGPTClass extends CoreClass{
         console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY); // Imprime la clave de API
 
 
-        this.openai = new ChatGPTAPI({
-        apiKey: process.env.OPENAI_API_KEY,
+    this.openai = new ChatGPTAPI({
+    apiKey: process.env.OPENAI_API_KEY,
 });
     };
 
